@@ -1,0 +1,20 @@
+var express = require('express');
+var router = express.Router();
+
+router.get('/', (req, res) => {
+  res.render('index', { title: 'Home' });
+});
+
+router.get('/about', (req, res) => {
+  res.render('about', { title: 'About' });
+});
+
+router.get('/signin', (req, res) => {
+  res.render('signin', { title: 'Signin' });
+});
+
+router.get('/signup', (req, res) => {
+  res.render('signup', { title: 'Signup' });
+});
+
+module.exports = router;
