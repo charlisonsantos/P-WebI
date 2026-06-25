@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 p-4">
+            <h3 class="fw-bold mb-4">Escrever Novo Poema</h3>
+            <form action="/poems/create" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Título</label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Categoria</label>
+                    <select name="category" class="form-select" required>
+                        <option value="Romance">Romance</option>
+                        <option value="Reflexão">Reflexão</option>
+                        <option value="Natureza">Natureza</option>
+                        <option value="Amizade">Amizade</option>
+                        <option value="Motivação">Motivação</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Conteúdo do Poema</label>
+                    <textarea name="content" class="form-control" rows="10" required placeholder="Escreva seus versos aqui..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success px-4">Publicar</button>
+                <a href="/poems" class="btn btn-light px-4">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,49 @@
+<%- include('../partials/header') %>
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm border-0 p-4">
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-feather-pointed text-primary fa-3x mb-2"></i>
+                <h3 class="fw-bold">Crie sua conta no VerseHub</h3>
+                <p class="text-muted small">Comece a compartilhar seus versos com o mundo</p>
+            </div>
+
+            <% if(typeof error !== 'undefined' && error) { %> 
+                <div class="alert alert-danger py-2 small"><%= error %></div> 
+            <% } %>
+
+            <form action="/auth/register" method="POST">
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Nome Completo</label>
+                    <input type="text" name="name" class="form-control" placeholder="Seu nome ou pseudônimo" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">E-mail</label>
+                    <input type="email" name="email" class="form-control" placeholder="exemplo@email.com" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Senha</label>
+                    <input type="password" name="password" class="form-control" placeholder="Crie uma senha forte" required>
+                </div>
+
+                <div class="form-check mb-4 small">
+                    <input class="form-check-input" type="checkbox" value="" id="terms" required>
+                    <label class="form-check-input-label text-muted" for="terms">
+                        Aceito os termos de uso e privacidade da comunidade.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Cadastrar</button>
+            </form>
+
+            <div class="text-center mt-4 pt-3 border-top">
+                <p class="mb-0 small text-muted">Já tem uma conta? <a href="/auth/login" class="text-decoration-none fw-bold">Faça Login</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 text-center p-4">
+            <div class="mb-3">
+                <img src="/uploads/<%= profileUser.profilePicture %>" 
+                     alt="Foto de Perfil de <%= profileUser.name %>" 
+                     class="rounded-circle img-thumbnail shadow-sm" 
+                     style="width: 150px; height: 150px; object-fit: cover;"
+                     onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+            </div>
+            <h4 class="fw-bold text-dark mb-1"><%= profileUser.name %></h4>
+            <p class="text-muted small mb-3">Membro desde: <%= profileUser.createdAt.toLocaleDateString('pt-BR') %></p>
+            
+            <p class="card-text text-secondary bg-light p-3 rounded text-start style-bio" style="min-height: 80px; white-space: pre-line;">
+                <%= profileUser.bio || 'Este poeta ainda não escreveu uma biografia.' %>
+            </p>
+
+            <% if (user && user._id.toString() === profileUser._id.toString()) { %>
+                <a href="/user/edit" class="btn btn-outline-primary btn-sm w-100 mt-2">
+                    <i class="fa-solid fa-user-pen me-1"></i> Editar Perfil
+                </a>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h3 class="fw-bold text-dark mb-4">Versos de <%= profileUser.name %> (<%= poems.length %>)</h3>
+        
+        <div class="row">
+            <% if (poems.length === 0) { %>
+                <div class="col-12 text-center text-muted my-5">
+                    <i class="fa-solid fa-feather fa-2x mb-2 d-block text-black-50"></i>
+                    Nenhum poema publicado por este autor ainda.
+                </div>
+            <% } %>
+            
+            <% poems.forEach(poem => { %>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-secondary mb-2 align-self-start"><%= poem.category %></span>
+                            <h5 class="card-title fw-bold text-dark text-truncate"><%= poem.title %></h5>
+                            <p class="card-text text-muted flex-grow-1 text-truncate" style="max-height: 70px; white-space: pre-line;"><%= poem.content %></p>
+                            <div class="mt-3 border-top pt-2 d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><i class="fa-solid fa-heart text-danger me-1"></i> <%= poem.likes.length %></small>
+                                <a href="/poems/<%= poem._id %>" class="btn btn-sm btn-link text-decoration-none fw-bold p-0">Ler poema →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

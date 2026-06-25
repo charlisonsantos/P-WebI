@@ -1,0 +1,71 @@
+<%- include('../partials/header') %>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <article class="bg-white p-5 rounded border shadow-sm text-center mb-4">
+            <span class="badge bg-secondary mb-3"><%= poem.category %></span>
+            <h1 class="fw-bold mb-4"><%= poem.title %></h1>
+            <p class="text-muted mb-4">Escrito por <a href="/user/profile/<%= poem.author._id %>" class="text-decoration-none font-weight-bold"><%= poem.author.name %></a></p>
+            <hr class="w-25 mx-auto my-4">
+            <p class="fs-5 text-dark mb-5" style="white-space: pre-line; line-height: 2;"><%= poem.content %></p>
+            <hr>
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-2">
+                    <form action="/poems/<%= poem._id %>/like" method="POST">
+                        <button type="submit" class="btn <%= user && poem.likes.includes(user._id) ? 'btn-danger' : 'btn-outline-danger' %> btn-sm">
+                            <i class="fa-solid fa-heart me-1"></i> <%= poem.likes.length %> Curtidas
+                        </button>
+                    </form>
+                    <% if(user) { %>
+                        <form action="/user/favorites/<%= poem._id %>" method="POST">
+                            <button type="submit" class="btn <%= isFavorited ? 'btn-warning text-white' : 'btn-outline-warning' %> btn-sm">
+                                <i class="fa-solid fa-bookmark"></i> <%= isFavorited ? 'Salvo' : 'Favoritar' %>
+                            </button>
+                        </form>
+                    <% } %>
+                </div>
+
+                <% if(user && user._id.toString() === poem.author._id.toString()) { %>
+                    <div class="d-flex gap-2">
+                        <a href="/poems/<%= poem._id %>/edit" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <form action="/poems/<%= poem._id %>/delete" method="POST" onsubmit="return confirm('Excluir este poema permanentemente?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </div>
+                <% } %>
+            </div>
+        </article>
+
+        <div class="bg-white p-4 rounded border shadow-sm">
+            <h5 class="fw-bold mb-4">Comentários (<%= comments.length %>)</h5>
+            <% if(user) { %>
+                <form action="/poems/<%= poem._id %>/comment" method="POST" class="mb-4">
+                    <div class="mb-3">
+                        <textarea name="content" class="form-control" rows="3" placeholder="Adicione um comentário..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-sm">Comentar</button>
+                </form>
+            <% } else { %>
+                <p class="text-muted mb-4"><a href="/auth/login">Faça login</a> para comentar.</p>
+            <% } %>
+
+            <div class="d-flex flex-column gap-3">
+                <% comments.forEach(comment => { %>
+                    <div class="p-3 bg-light rounded border position-relative">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <strong class="text-dark"><%= comment.author.name %></strong>
+                            <small class="text-muted"><%= comment.createdAt.toLocaleDateString('pt-BR') %></small>
+                        </div>
+                        <p class="mb-0 text-secondary"><%= comment.content %></p>
+                        <% if(user && user._id.toString() === comment.author._id.toString()) { %>
+                            <form action="/poems/<%= poem._id %>/comment/<%= comment._id %>/delete" method="POST" class="position-absolute end-0 top-0 m-2">
+                                <button type="submit" class="btn btn-link text-danger p-0 border-0" title="Excluir"><i class="fa-solid fa-trash-can"></i></button>
+                            </form>
+                        <% } %>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>

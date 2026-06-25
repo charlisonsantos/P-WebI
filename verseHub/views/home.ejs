@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<div class="p-5 mb-4 bg-white rounded-3 border text-center shadow-sm">
+    <div class="container-fluid py-5">
+        <h1 class="display-4 fw-bold text-dark">Bem-vindo ao VerseHub</h1>
+        <p class="col-md-8 fs-4 mx-auto text-muted">A plataforma definitiva para escritores e amantes de poesia. Escreva, compartilhe e encontre sentimentos em formato de versos.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
+            <a href="/poems" class="btn btn-primary btn-lg px-4 gap-3">Explorar Poemas</a>
+            <% if (!user) { %>
+                <a href="/auth/register" class="btn btn-outline-secondary btn-lg px-4">Começar a Escrever</a>
+            <% } else { %>
+                <a href="/poems/create" class="btn btn-success btn-lg px-4">Publicar Poema</a>
+            <% } %>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
